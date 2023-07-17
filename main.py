@@ -30,7 +30,7 @@ class GhostTeleBot:
         result = requests.get(telegramupdatesurl, headers=headers, params=params).text
         rjson = json.loads(result)
         for message in rjson['result']:
-            if (datetime.datetime.fromtimestamp(message['message']['date']) - datetime.datetime.now()).total_seconds() > 10:
+            if (datetime.datetime.now() - datetime.datetime.fromtimestamp(message['message']['date'])).total_seconds() > 10:
                 continue
             if message['message']['text'][1:] in list(self.commands.keys()):
                 if  not self.lastsent.__contains__(message['message']['from']['id']) or message['message']['date'] > self.lastsent[message['message']['from']['id']]:
